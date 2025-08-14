@@ -154,6 +154,8 @@ export default function App() {
       <div style={{ marginTop: '30px', fontSize: '14px', color: '#666' }}>
         <p><strong>Model:</strong> gen3a_turbo</p>
         <p><strong>Duration:</strong> 5 seconds</p>
+          <p><strong>Ratio: </strong> 1280:768</p>
+        
       </div>
     </div>
   );
