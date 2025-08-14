@@ -149,10 +149,10 @@ export default function App() {
       <div style={radioGroupStyle}>
         <p style={{ marginTop: 0, fontWeight: 'bold' }}>Aspect Ratio:</p>
         <label style={radioLabelStyle}>
-          <input type="radio" value="1280:768" checked={ratio === '1280:768'} onChange={() => setRatio('1280:768')} /> Landscape
+          <input type="radio" value="1280:768" checked={ratio === '1280:768'} onChange={() => setRatio('1280:768')} /> Landscape (1280:768)
         </label>
         <label style={radioLabelStyle}>
-          <input type="radio" value="768:1280" checked={ratio === '768:1280'} onChange={() => setRatio('768:1280')} /> Portrait
+          <input type="radio" value="768:1280" checked={ratio === '768:1280'} onChange={() => setRatio('768:1280')} /> Portrait (768:1280)
         </label>
       </div>
 
