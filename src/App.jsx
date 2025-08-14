@@ -10,6 +10,10 @@ export default function App() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
+  // New state for user options
+  const [duration, setDuration] = useState('5');
+  const [ratio, setRatio] = useState('1280:768');
+
   const pollIntervalRef = useRef(null);
 
   useEffect(() => {
@@ -99,6 +103,9 @@ export default function App() {
       const formData = new FormData();
       formData.append('prompt', prompt);
       formData.append('image', selectedFile);
+      // Append the new options
+      formData.append('duration', duration);
+      formData.append('ratio', ratio);
 
       const response = await fetch('/ai', { method: 'POST', body: formData });
       const data = await response.json();
@@ -115,6 +122,9 @@ export default function App() {
       setIsGenerating(false);
     }
   };
+  
+  const radioGroupStyle = { marginBottom: '20px', border: '1px solid #ccc', padding: '10px', borderRadius: '5px' };
+  const radioLabelStyle = { marginRight: '15px', cursor: 'pointer' };
 
   return (
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto', fontFamily: 'sans-serif' }}>
@@ -123,6 +133,29 @@ export default function App() {
         <label style={{ display: 'block', marginBottom: '5px' }}>Video Prompt:</label>
         <input type="text" placeholder="e.g., 'camera slowly zooms in'" value={prompt} onChange={e => setPrompt(e.target.value)} style={{ width: '100%', padding: '10px', fontSize: '16px', boxSizing: 'border-box' }} />
       </div>
+
+      {/* New Radio Buttons for Duration */}
+      <div style={radioGroupStyle}>
+        <p style={{ marginTop: 0, fontWeight: 'bold' }}>Duration:</p>
+        <label style={radioLabelStyle}>
+          <input type="radio" value="5" checked={duration === '5'} onChange={() => setDuration('5')} /> 5 Seconds
+        </label>
+        <label style={radioLabelStyle}>
+          <input type="radio" value="10" checked={duration === '10'} onChange={() => setDuration('10')} /> 10 Seconds
+        </label>
+      </div>
+
+      {/* New Radio Buttons for Aspect Ratio */}
+      <div style={radioGroupStyle}>
+        <p style={{ marginTop: 0, fontWeight: 'bold' }}>Aspect Ratio:</p>
+        <label style={radioLabelStyle}>
+          <input type="radio" value="1280:768" checked={ratio === '1280:768'} onChange={() => setRatio('1280:768')} /> Landscape
+        </label>
+        <label style={radioLabelStyle}>
+          <input type="radio" value="768:1280" checked={ratio === '768:1280'} onChange={() => setRatio('768:1280')} /> Portrait
+        </label>
+      </div>
+
       <div style={{ marginBottom: '20px' }}>
         <label style={{ display: 'block', marginBottom: '5px' }}>Source Image:</label>
         <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp" onChange={handleFileSelect} style={{ width: '100%' }} />
@@ -153,9 +186,6 @@ export default function App() {
       )}
       <div style={{ marginTop: '30px', fontSize: '14px', color: '#666' }}>
         <p><strong>Model:</strong> gen3a_turbo</p>
-        <p><strong>Duration:</strong> 5 seconds</p>
-          <p><strong>Ratio: </strong> 1280:768</p>
-        
       </div>
     </div>
   );
